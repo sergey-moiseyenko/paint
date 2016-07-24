@@ -1,5 +1,7 @@
 package com.smoiseyenko;
 
+import com.smoiseyenko.gui.PaintMenu;
+
 /**
  * Hello world!
  *
@@ -7,6 +9,7 @@ package com.smoiseyenko;
 public class App {
 
     public static void main( String[] args ) {
-        System.out.println( "Hello World!" );
+
+        new PaintMenu();
     }
 }
