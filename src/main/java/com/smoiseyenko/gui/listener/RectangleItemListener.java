@@ -1,7 +1,6 @@
 package com.smoiseyenko.gui.listener;
 
 import com.smoiseyenko.gui.PaintFrame;
-import com.smoiseyenko.model.Ellipse;
 import com.smoiseyenko.model.Rectangle;
 
 import java.awt.event.*;
@@ -20,6 +19,6 @@ public class RectangleItemListener implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        frame.setName(Rectangle.NAME);
+        frame.setCurrentShapeName(Rectangle.NAME);
     }
 }

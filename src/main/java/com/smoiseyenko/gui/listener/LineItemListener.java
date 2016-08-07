@@ -1,7 +1,6 @@
 package com.smoiseyenko.gui.listener;
 
 import com.smoiseyenko.gui.PaintFrame;
-import com.smoiseyenko.model.Ellipse;
 import com.smoiseyenko.model.Line;
 
 import java.awt.event.ActionEvent;
@@ -21,6 +20,6 @@ public class LineItemListener implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        frame.setName(Line.NAME);
+        frame.setCurrentShapeName(Line.NAME);
     }
 }

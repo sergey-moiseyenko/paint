@@ -25,6 +25,8 @@ public class PaintFrame extends JFrame {
     private JMenuItem ellipseItem;
     private JMenuItem rectangleItem;
     private ArrayList<Shape> shapes;
+    private Shape currentShape;
+    private String currentShapeName;
     private JPanel panel = new JPanel();
     private MouseListener mouseListener;
     private MouseMotionListener mouseMotionListener;
@@ -89,19 +91,17 @@ public class PaintFrame extends JFrame {
         setVisible(true);
     }
 
-    public void shapeWasCreated(Shape shape) {
-
-        shapes.add(shape);
+    public void shapeDrawingIsFinished() {
+        shapes.add(currentShape);
     }
 
     public void repaintPanel() {
 
-        panel.getGraphics().clearRect(0, 0, panel.getWidth(), panel.getHeight());
+        Graphics context = panel.getGraphics();
+        context.clearRect(0, 0, panel.getWidth(), panel.getHeight());
 
-        Iterator<Shape> iterator = shapes.iterator();
-        while (iterator.hasNext()) {
-
-            iterator.next().draw(panel.getGraphics());
+        for (Shape shape : shapes) {
+            shape.draw(context);
         }
     }
 
@@ -110,19 +110,15 @@ public class PaintFrame extends JFrame {
         return panel.getGraphics();
     }
 
-    public MouseMotionListener getMouseMotionListener() {
+    public Shape getCurrentShape () { return this.currentShape; }
 
-        return mouseMotionListener;
+    public void setCurrentShape(Shape shape) {
+        this.currentShape = shape;
     }
 
-    public MouseListener getMouseListener() {
+    public String getCurrentShapeName () { return this.currentShapeName; }
 
-        return mouseListener;
-    }
-
-    public void setName(String name) {
-
-        mouseListener.setNameOfShape(name);
-        mouseMotionListener.setNameOfShape(name);
+    public void setCurrentShapeName(String shapeName) {
+        this.currentShapeName = shapeName;
     }
 }
