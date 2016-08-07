@@ -11,6 +11,8 @@ public abstract class Shape {
     private int yTop;
     private int xRight;
     private int yBottom;
+    private int xPress;
+    private int yPress;
 
     public Shape (int x, int y) {
 
@@ -18,17 +20,19 @@ public abstract class Shape {
         yTop = y;
         xRight = x;
         yBottom = y;
+        xPress = x;
+        yPress = y;
     }
 
-    public abstract  void draw(Graphics graphics);
+    public abstract void draw(Graphics graphics);
 
     public void setLastCoordinate(int x, int y) {
 
-        if (x <= xLeft) xLeft = x;
-            else xRight = x;
+        if (x >= xPress) xRight = x;
+        else if (x <= xPress) xLeft = x;
 
-        if (y <= yTop) yTop = y;
-            else yBottom = y;
+        if (y >= yPress) yBottom = y;
+        else if (y <= yPress) yTop = y;
     }
 
     public int getXLeft() {
@@ -46,4 +50,8 @@ public abstract class Shape {
     public int getYBottom() {
         return yBottom;
     }
+
+    public void setXRight(int xRight) {this.xRight = xRight;}
+
+    public void setYBottom(int yBottom) {this.yBottom = yBottom;}
 }
