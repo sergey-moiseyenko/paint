@@ -2,8 +2,6 @@ package com.smoiseyenko.gui.listener;
 
 import com.smoiseyenko.gui.PaintFrame;
 import com.smoiseyenko.model.*;
-import com.smoiseyenko.model.Rectangle;
-import com.smoiseyenko.model.Shape;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,53 +9,42 @@ import java.awt.event.MouseEvent;
 
 public class MouseListener extends MouseAdapter {
 
-    private String nameOfShape;
-    private static Shape shape;
-    private PaintFrame paintFrame;
+    private PaintFrame frame;
 
-    public MouseListener(PaintFrame paintFrame) {
-
-        this.paintFrame = paintFrame;
+    public MouseListener(PaintFrame frame) {
+        this.frame = frame;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
 
-        if (nameOfShape != null) {
+        String shapeName = frame.getCurrentShapeName();
 
-            if (nameOfShape.equals(Ellipse.NAME)) {
+        if (shapeName != null) {
 
-                Ellipse ellipse = new Ellipse(e.getX(), e.getY());
-                shape = ellipse;
+            Shape shape = null;
+
+            if (shapeName.equals(Ellipse.NAME)) {
+                shape = new Ellipse(e.getX(), e.getY());
             }
 
-            if (nameOfShape.equals(Line.NAME)) {
-
-                Line line = new Line(e.getX(), e.getY());
-                shape = line;
+            if (shapeName.equals(Line.NAME)) {
+                shape = new Line(e.getX(), e.getY());
             }
 
-            if (nameOfShape.equals(Rectangle.NAME)) {
+            if (shapeName.equals(Rectangle.NAME)) {
+                shape = new Rectangle(e.getX(), e.getY());
+            }
 
-                Rectangle rectangle = new Rectangle(e.getX(), e.getY());
-                shape = rectangle;
+            if (shape != null) {
+                frame.setCurrentShape(shape);
+                shape.draw(frame.getGraphicsContext());
             }
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
-        paintFrame.shapeWasCreated(shape);
-    }
-
-    public void setNameOfShape(String nameOfShape) {
-
-        this.nameOfShape = nameOfShape;
-    }
-
-    public static Shape getShape() {
-
-        return shape;
+        frame.shapeDrawingIsFinished();
     }
 }

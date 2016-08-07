@@ -14,12 +14,10 @@ public class EllipseItemListener implements ActionListener {
     private PaintFrame frame;
 
     public EllipseItemListener(PaintFrame frame) {
-
         this.frame = frame;
     }
 
     public void actionPerformed(ActionEvent e) {
-
-        frame.setName(Ellipse.NAME);
+        frame.setCurrentShapeName(Ellipse.NAME);
     }
 }
