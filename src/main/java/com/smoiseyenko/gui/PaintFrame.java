@@ -1,14 +1,15 @@
 package com.smoiseyenko.gui;
 
+import com.smoiseyenko.gui.context.Context;
+import com.smoiseyenko.model.repository.ShapeRepository;
 import com.smoiseyenko.gui.listener.*;
 import com.smoiseyenko.gui.listener.MouseListener;
 import com.smoiseyenko.gui.listener.MouseMotionListener;
-import com.smoiseyenko.model.Shape;
 
 import javax.swing.*;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Igor on 7/23/16.
@@ -21,104 +22,85 @@ public class PaintFrame extends JFrame {
     private JMenuItem openItem;
     private JMenuItem saveItem;
     private JMenuItem saveAsItem;
-    private JMenuItem pencilItem;
+    private JMenuItem lineItem;
     private JMenuItem ellipseItem;
     private JMenuItem rectangleItem;
-    private ArrayList<Shape> shapes;
-    private Shape currentShape;
-    private String currentShapeName;
     private JPanel panel = new JPanel();
-    private MouseListener mouseListener;
-    private MouseMotionListener mouseMotionListener;
+    private JMenuItem colorChooser;
+    private JMenu insertMenu;
 
-    public PaintFrame() {
+    public PaintFrame(Context context) {
 
         super("Paint");
-        mouseListener = new MouseListener(this);
-        mouseMotionListener = new MouseMotionListener(this);
         setUpUI();
+        setUpListeners(context);
     }
 
     private void setUpUI() {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        panel.setSize(600, 400);
-        panel.setBackground(Color.white);
-        shapes = new ArrayList<Shape>();
-        panel.addMouseListener(mouseListener);
-        panel.addMouseMotionListener(mouseMotionListener);
+
         JMenuBar menu = new JMenuBar();
 
         JMenu paintMenu = new JMenu("Paint");
         aboutPaintItem = new JMenuItem("About Paint");
-        aboutPaintItem.addActionListener(new AboutItemListener(this));
         quitItem = new JMenuItem("Quit");
-        quitItem.addActionListener(new QuitItemListener(this));
         paintMenu.add(aboutPaintItem);
         paintMenu.add(quitItem);
 
         JMenu fileMenu = new JMenu("File");
         newItem = new JMenuItem("New");
-        newItem.addActionListener(new NewItemListener(this));
         openItem = new JMenuItem("Open");
-        openItem.addActionListener(new OpenItemListener());
         saveItem = new JMenuItem("Save");
-        saveItem.addActionListener(new SaveItemListener());
         saveAsItem = new JMenuItem("Save As");
-        saveAsItem.addActionListener(new SaveAsItemListener());
         fileMenu.add(newItem);
         fileMenu.add(openItem);
         fileMenu.add(saveItem);
         fileMenu.add(saveAsItem);
 
-        JMenu insertMenu = new JMenu("Insert");
-        pencilItem = new JMenuItem("Line");
-        pencilItem.addActionListener(new LineItemListener(this));
-        ellipseItem = new JMenuItem("Ellipse");
-        ellipseItem.addActionListener(new EllipseItemListener(this));
-        rectangleItem = new JMenuItem("Rectangle");
-        rectangleItem.addActionListener(new RectangleItemListener(this));
-        insertMenu.add(pencilItem);
+        insertMenu = new JMenu("Insert");
+        lineItem = new JMenuItem(ShapeRepository.LINE_NAME);
+        ellipseItem = new JMenuItem(ShapeRepository.ELLIPSE_NAME);
+        rectangleItem = new JMenuItem(ShapeRepository.RECTANGLE_NAME);
+        insertMenu.add(lineItem);
         insertMenu.add(ellipseItem);
         insertMenu.add(rectangleItem);
+
+        JMenu colors = new JMenu("Colors");
+        colorChooser = new JMenuItem("Choose Color");
+        colors.add(colorChooser);
 
         menu.add(paintMenu);
         menu.add(fileMenu);
         menu.add(insertMenu);
+        menu.add(colors);
         setJMenuBar(menu);
         setContentPane(panel);
         setSize(600, 400);
         setVisible(true);
     }
 
-    public void shapeDrawingIsFinished() {
-        shapes.add(currentShape);
-    }
+    private void setUpListeners(Context context) {
 
-    public void repaintPanel() {
+        aboutPaintItem.addActionListener(new AboutItemListener(this));
+        quitItem.addActionListener(new QuitItemListener(this));
+        openItem.addActionListener(new OpenItemListener());
+        saveItem.addActionListener(new SaveItemListener());
+        saveAsItem.addActionListener(new SaveAsItemListener());
 
-        Graphics context = panel.getGraphics();
-        context.clearRect(0, 0, panel.getWidth(), panel.getHeight());
+        InsertMenuItemListener insertListener = new InsertMenuItemListener(context);
+        lineItem.addActionListener(insertListener);
+        ellipseItem.addActionListener(insertListener);
+        rectangleItem.addActionListener(insertListener);
 
-        for (Shape shape : shapes) {
-            shape.draw(context);
-        }
-    }
+        Graphics graphics = panel.getGraphics();
+        graphics.setClip(0, 0, panel.getWidth(), panel.getHeight());
+        MouseListener mouseListener = new MouseListener(graphics, context);
+        MouseMotionListener mouseMotionListener = new MouseMotionListener(graphics, context);
+        panel.addMouseListener(mouseListener);
+        panel.addMouseMotionListener(mouseMotionListener);
+        newItem.addActionListener(new NewItemListener(graphics, context, this));
 
-    public Graphics getGraphicsContext() {
-
-        return panel.getGraphics();
-    }
-
-    public Shape getCurrentShape () { return this.currentShape; }
-
-    public void setCurrentShape(Shape shape) {
-        this.currentShape = shape;
-    }
-
-    public String getCurrentShapeName () { return this.currentShapeName; }
-
-    public void setCurrentShapeName(String shapeName) {
-        this.currentShapeName = shapeName;
+        colorChooser.addActionListener(new ChooseColorListener(panel, context));
     }
 }

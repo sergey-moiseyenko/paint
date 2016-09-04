@@ -1,8 +1,10 @@
 package com.smoiseyenko.gui.listener;
 
 import com.smoiseyenko.gui.PaintFrame;
+import com.smoiseyenko.gui.context.Context;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,10 +13,14 @@ import java.awt.event.ActionListener;
  */
 public class NewItemListener implements ActionListener {
 
-    private JFrame frame;
+    private Graphics graphics;
+    private Context context;
+    private PaintFrame frame;
 
-    public NewItemListener(JFrame frame) {
+    public NewItemListener(Graphics graphics, Context context, PaintFrame frame) {
 
+        this.graphics = graphics;
+        this.context = context;
         this.frame = frame;
     }
 
@@ -24,8 +30,12 @@ public class NewItemListener implements ActionListener {
 
         if (choice == JOptionPane.YES_OPTION){
 
-            frame.setVisible(false);
-            new PaintFrame();
+            graphics.setColor(Color.WHITE);
+            graphics.fillRect(0, 0, (int)graphics.getClipRect().getWidth(), (int)graphics.getClipRect().getHeight());
+            graphics.setColor(Color.BLACK);
+            context.setCurrentShapeName(null);
+            context.setCurrentColor(Color.BLACK);
+            context.getShapes().removeAll(context.getShapes());
         }
     }
 }

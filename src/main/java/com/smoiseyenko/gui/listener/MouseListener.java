@@ -1,50 +1,42 @@
 package com.smoiseyenko.gui.listener;
 
-import com.smoiseyenko.gui.PaintFrame;
-import com.smoiseyenko.model.*;
+import com.smoiseyenko.gui.context.Context;
+import com.smoiseyenko.gui.model.Shape;
 
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
 public class MouseListener extends MouseAdapter {
 
-    private PaintFrame frame;
+    private Context context;
+    private Graphics graphics;
 
-    public MouseListener(PaintFrame frame) {
-        this.frame = frame;
+    public MouseListener(Graphics graphics, Context context) {
+
+        this.graphics = graphics;
+        this.context = context;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
 
-        String shapeName = frame.getCurrentShapeName();
+        if (context.getCurrentShapeName() != null) {
 
-        if (shapeName != null) {
-
-            Shape shape = null;
-
-            if (shapeName.equals(Ellipse.NAME)) {
-                shape = new Ellipse(e.getX(), e.getY());
-            }
-
-            if (shapeName.equals(Line.NAME)) {
-                shape = new Line(e.getX(), e.getY());
-            }
-
-            if (shapeName.equals(Rectangle.NAME)) {
-                shape = new Rectangle(e.getX(), e.getY());
-            }
+            Shape shape = context.createShape();
 
             if (shape != null) {
-                frame.setCurrentShape(shape);
-                shape.draw(frame.getGraphicsContext());
+
+                shape.setFirstCoordinate(e.getX(), e.getY());
+                shape.draw(graphics);
             }
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        frame.shapeDrawingIsFinished();
+
+        if (context.getCurrentShapeName() != null) context.storeShape();
     }
 }
