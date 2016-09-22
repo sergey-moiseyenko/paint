@@ -2,10 +2,7 @@ package com.smoiseyenko.model.repository;
 
 import com.smoiseyenko.gui.model.Shape;
 import com.smoiseyenko.gui.repository.Repository;
-import com.smoiseyenko.model.shape.factory.EllipseFactory;
-import com.smoiseyenko.model.shape.factory.LineFactory;
-import com.smoiseyenko.model.shape.factory.RectangleFactory;
-import com.smoiseyenko.model.shape.factory.ShapeFactory;
+import com.smoiseyenko.model.shape.factory.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,5 +35,9 @@ public class ShapeRepository implements Repository {
 
     public Shape createShape(String shapeName) {
         return map.get(shapeName).createShape();
+    }
+
+    public void addTemplateFactory(String name, ShapeFactory factory) {
+        map.put(name, factory);
     }
 }

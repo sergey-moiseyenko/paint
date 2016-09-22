@@ -5,24 +5,32 @@ import java.awt.*;
 /**
  * Created by Igor on 7/24/16.
  */
-public abstract class Shape {
-
-    protected int xInitial;
-    protected int yInitial;
+public abstract class Shape implements Cloneable {
 
     private int xLeft;
     private int yTop;
     private int width;
     private int height;
 
+    private double widthCoefficient;
+    private double heightCoefficient;
+    private double widthCoefficientForTopLeftPoint;
+    private double heightCoefficientForTopLeftPoint;
+
+    protected int xInitial;
+    protected int yInitial;
+
     private Color color;
 
-    public abstract void draw(Graphics graphics);
+    public void draw(Graphics graphics) {}
 
     public void setFirstCoordinate(int x, int y) {
 
-        xInitial = xLeft = x;
-        yInitial = yTop = y;
+        xInitial = x;
+        yInitial = y;
+        xLeft = x;
+        yTop = y;
+
         width = 0;
         height = 0;
     }
@@ -35,19 +43,98 @@ public abstract class Shape {
         if (y <= yInitial) yTop = y;
     }
 
-    public int getXLeft() {
+    public void setColor(Color shapeColor) {
+        color = shapeColor;
+    }
+
+    public void setCoefficient(double panelWidth, double panelHeight) {
+
+        widthCoefficient = width / panelWidth;
+        heightCoefficient = height / panelHeight;
+        widthCoefficientForTopLeftPoint = xLeft / panelWidth;
+        heightCoefficientForTopLeftPoint = yTop / panelHeight;
+    }
+
+    public void setLeftX(int xLeft) {
+        this.xLeft = xLeft;
+    }
+
+    public void setTopY(int yTop) {
+        this.yTop = yTop;
+    }
+
+    public int getWidth () { return this.width; }
+
+    public int getHeight () { return this.height; }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setHeightCoefficient(double heightCoefficient) {
+        this.heightCoefficient = heightCoefficient;
+    }
+
+    public void setWidthCoefficient(double widthCoefficient) {
+        this.widthCoefficient = widthCoefficient;
+    }
+
+    public void setWidthCoefficientForTopLeftPoint(double widthCoefficientForTopLeftPoint) {
+        this.widthCoefficientForTopLeftPoint = widthCoefficientForTopLeftPoint;
+    }
+
+    public void setHeightCoefficientForTopLeftPoint(double heightCoefficientForTopLeftPoint) {
+        this.heightCoefficientForTopLeftPoint = heightCoefficientForTopLeftPoint;
+    }
+
+    public int getLeftX() {
         return xLeft;
     }
 
-    public int getYTop() {
+    public int getTopY() {
         return yTop;
     }
 
-    public int getWidth() { return width; }
+    public Color getColor() {
+        return color;
+    }
 
-    public int getHeight() { return height; }
+    public double getHeightCoefficient() {
+        return heightCoefficient;
+    }
 
-    public void setColor(Color shapeColor) { color = shapeColor; }
+    public double getWidthCoefficient() {
+        return widthCoefficient;
+    }
 
-    public Color getColor() { return color; }
+    public double getHeightCoefficientForTopLeftPoint() {
+        return heightCoefficientForTopLeftPoint;
+    }
+
+    public double getWidthCoefficientForTopLeftPoint() {
+        return widthCoefficientForTopLeftPoint;
+    }
+
+    @Override
+    public Shape clone() throws CloneNotSupportedException {
+
+        Shape shape = (Shape) super.clone();
+
+        shape.setHeight(height);
+        shape.setWidth(width);
+        shape.setLeftX(getLeftX());
+        shape.setTopY(getTopY());
+        shape.setHeightCoefficient(getHeightCoefficient());
+        shape.setWidthCoefficient(getWidthCoefficient());
+        shape.setHeightCoefficientForTopLeftPoint(getHeightCoefficientForTopLeftPoint());
+        shape.setWidthCoefficientForTopLeftPoint(getWidthCoefficientForTopLeftPoint());
+
+        return shape;
+    }
 }
+
+

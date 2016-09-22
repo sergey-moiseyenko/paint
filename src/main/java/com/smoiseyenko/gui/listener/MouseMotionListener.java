@@ -2,6 +2,7 @@ package com.smoiseyenko.gui.listener;
 
 import com.smoiseyenko.gui.context.Context;
 import com.smoiseyenko.gui.model.Shape;
+import com.smoiseyenko.gui.templates.Template;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -40,7 +41,7 @@ public class MouseMotionListener extends MouseMotionAdapter {
 
         graphics.setColor(Color.WHITE);
         Rectangle rectangle = graphics.getClipRect();
-        graphics.fillRect(0, 0, (int)rectangle.getWidth(), (int)rectangle.getHeight());
+        graphics.fillRect(0, 0, (int) rectangle.getWidth(), (int) rectangle.getHeight());
 
         List<Shape> shapes = context.getShapes();
 

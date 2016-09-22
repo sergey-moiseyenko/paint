@@ -1,6 +1,7 @@
 package com.smoiseyenko.gui.repository;
 
 import com.smoiseyenko.gui.model.Shape;
+import com.smoiseyenko.model.shape.factory.ShapeFactory;
 
 
 /**
@@ -9,4 +10,5 @@ import com.smoiseyenko.gui.model.Shape;
 public interface Repository {
 
     Shape createShape(String shapeName);
+    void addTemplateFactory(String name, ShapeFactory factory);
 }

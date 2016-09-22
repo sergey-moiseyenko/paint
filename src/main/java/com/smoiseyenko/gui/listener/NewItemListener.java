@@ -33,9 +33,8 @@ public class NewItemListener implements ActionListener {
             graphics.setColor(Color.WHITE);
             graphics.fillRect(0, 0, (int)graphics.getClipRect().getWidth(), (int)graphics.getClipRect().getHeight());
             graphics.setColor(Color.BLACK);
-            context.setCurrentShapeName(null);
             context.setCurrentColor(Color.BLACK);
-            context.getShapes().removeAll(context.getShapes());
+            context.removeShapes();
         }
     }
 }

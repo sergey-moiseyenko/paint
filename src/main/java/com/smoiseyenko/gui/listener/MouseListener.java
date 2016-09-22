@@ -2,6 +2,7 @@ package com.smoiseyenko.gui.listener;
 
 import com.smoiseyenko.gui.context.Context;
 import com.smoiseyenko.gui.model.Shape;
+import com.smoiseyenko.gui.templates.Template;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -29,6 +30,7 @@ public class MouseListener extends MouseAdapter {
             if (shape != null) {
 
                 shape.setFirstCoordinate(e.getX(), e.getY());
+                shape.setCoefficient(context.getPanelWidth(), context.getPanelHeight());
                 shape.draw(graphics);
             }
         }

@@ -22,16 +22,19 @@ public class PaintFrame extends JFrame {
     private JMenuItem openItem;
     private JMenuItem saveItem;
     private JMenuItem saveAsItem;
+    private JMenuItem saveAsTemplate;
     private JMenuItem lineItem;
     private JMenuItem ellipseItem;
     private JMenuItem rectangleItem;
     private JPanel panel = new JPanel();
     private JMenuItem colorChooser;
     private JMenu insertMenu;
+    private Context context;
 
     public PaintFrame(Context context) {
 
         super("Paint");
+        this.context = context;
         setUpUI();
         setUpListeners(context);
     }
@@ -53,10 +56,12 @@ public class PaintFrame extends JFrame {
         openItem = new JMenuItem("Open");
         saveItem = new JMenuItem("Save");
         saveAsItem = new JMenuItem("Save As");
+        saveAsTemplate = new JMenuItem("Save As template");
         fileMenu.add(newItem);
         fileMenu.add(openItem);
         fileMenu.add(saveItem);
         fileMenu.add(saveAsItem);
+        fileMenu.add(saveAsTemplate);
 
         insertMenu = new JMenu("Insert");
         lineItem = new JMenuItem(ShapeRepository.LINE_NAME);
@@ -76,19 +81,22 @@ public class PaintFrame extends JFrame {
         menu.add(colors);
         setJMenuBar(menu);
         setContentPane(panel);
+        context.setPanelSize(600, 400);
         setSize(600, 400);
         setVisible(true);
     }
 
     private void setUpListeners(Context context) {
 
+        InsertMenuItemListener insertListener = new InsertMenuItemListener(context);
+
         aboutPaintItem.addActionListener(new AboutItemListener(this));
         quitItem.addActionListener(new QuitItemListener(this));
         openItem.addActionListener(new OpenItemListener());
         saveItem.addActionListener(new SaveItemListener());
         saveAsItem.addActionListener(new SaveAsItemListener());
+        saveAsTemplate.addActionListener(new SaveAsTemplateListener(context, insertMenu));
 
-        InsertMenuItemListener insertListener = new InsertMenuItemListener(context);
         lineItem.addActionListener(insertListener);
         ellipseItem.addActionListener(insertListener);
         rectangleItem.addActionListener(insertListener);
