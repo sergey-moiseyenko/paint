@@ -2,10 +2,8 @@ package com.smoiseyenko.model.context;
 
 import com.smoiseyenko.gui.context.Context;
 import com.smoiseyenko.gui.model.Shape;
-import com.smoiseyenko.gui.utill.Collection;
 import com.smoiseyenko.model.repository.ShapeRepository;
-import com.smoiseyenko.model.shape.factory.ShapeFactory;
-import com.smoiseyenko.model.shape.factory.TemplateFactoryBuilder;
+import com.smoiseyenko.model.shape.factory.TemplateFactory;
 
 import java.awt.Color;
 import java.util.*;
@@ -48,8 +46,8 @@ public class PaintContext implements Context {
 
     public void setTemplate(String name) throws CloneNotSupportedException{
 
-        ShapeFactory factory = TemplateFactoryBuilder.builder().build(shapes);
-        ShapeRepository.getShapeRepository().addTemplateFactory(name, factory);
+        TemplateFactory templateFactory = TemplateFactory.builder().shapes(shapes).build();
+        ShapeRepository.getShapeRepository().addTemplateFactory(name, templateFactory);
     }
 
     public void setPanelSize(int width, int height) {

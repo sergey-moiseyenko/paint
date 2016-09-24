@@ -28,4 +28,24 @@ public class TemplateFactory implements ShapeFactory {
             throw new IllegalArgumentException();
         }
     }
+
+    public static Builder builder () {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private List<Shape> shapes;
+
+        private Builder () {}
+
+        public Builder shapes (List<Shape> shapes) {
+            this.shapes = shapes;
+            return this;
+        }
+
+        public TemplateFactory build () {
+            return new TemplateFactory(this.shapes);
+        }
+    }
 }
