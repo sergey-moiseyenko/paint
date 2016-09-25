@@ -9,8 +9,8 @@ public abstract class Shape implements Cloneable {
 
     private int xLeft;
     private int yTop;
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
 
     private double widthCoefficient;
     private double heightCoefficient;

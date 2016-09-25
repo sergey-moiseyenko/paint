@@ -20,6 +20,9 @@ public class Line extends Shape implements Cloneable{
 
         lastX = x;
         lastY = y;
+
+        width = lastX - xInitial;
+        height = lastY - yInitial;
     }
 
     @Override
@@ -43,4 +46,23 @@ public class Line extends Shape implements Cloneable{
 
         return line;
     }
+
+    @Override
+    public void setLeftX(int xLeft) {
+        xInitial = xLeft;
+    }
+
+    @Override
+    public void setTopY(int yTop) { yInitial = yTop; }
+
+    @Override
+    public void setHeight(int height) {
+        lastY = yInitial + height;
+    }
+
+    @Override
+    public void setWidth(int width) {
+        lastX = xInitial + width;
+    }
 }
+

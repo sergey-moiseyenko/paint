@@ -54,10 +54,10 @@ public class ShapeTemplate extends Template {
 
         for (Shape shape : shapes) {
 
-            shape.setLeftX(getLeftX() + (int)(getWidth() * shape.getWidthCoefficientForTopLeftPoint()));
-            shape.setTopY(getTopY() + (int)(getHeight() * shape.getHeightCoefficientForTopLeftPoint()));
-            shape.setWidth((int)(getWidth() * shape.getWidthCoefficient()));
-            shape.setHeight((int)(getHeight() * shape.getHeightCoefficient()));
+            shape.setLeftX(getLeftX() + (int) (getWidth() * shape.getWidthCoefficientForTopLeftPoint()));
+            shape.setTopY(getTopY() + (int) (getHeight() * shape.getHeightCoefficientForTopLeftPoint()));
+            shape.setWidth((int) (getWidth() * shape.getWidthCoefficient()));
+            shape.setHeight((int) (getHeight() * shape.getHeightCoefficient()));
         }
     }
 }

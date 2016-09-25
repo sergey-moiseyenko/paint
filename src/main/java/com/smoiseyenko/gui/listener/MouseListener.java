@@ -39,6 +39,8 @@ public class MouseListener extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
 
-        if (context.getCurrentShapeName() != null) context.storeShape();
+        if (context.getCurrentShapeName() != null) {
+            context.storeShape();
+        }
     }
 }
