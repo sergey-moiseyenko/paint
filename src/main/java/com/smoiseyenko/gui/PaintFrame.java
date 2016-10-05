@@ -1,15 +1,15 @@
 package com.smoiseyenko.gui;
 
 import com.smoiseyenko.gui.context.Context;
+import com.smoiseyenko.gui.command.CommandHistory;
 import com.smoiseyenko.model.repository.ShapeRepository;
 import com.smoiseyenko.gui.listener.*;
 import com.smoiseyenko.gui.listener.MouseListener;
 import com.smoiseyenko.gui.listener.MouseMotionListener;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by Igor on 7/23/16.
@@ -30,6 +30,8 @@ public class PaintFrame extends JFrame {
     private JMenuItem colorChooser;
     private JMenu insertMenu;
     private Context context;
+    private JMenuItem undoMenuItem;
+    private JMenuItem redoMenuItem;
 
     public PaintFrame(Context context) {
 
@@ -49,6 +51,7 @@ public class PaintFrame extends JFrame {
         aboutPaintItem = new JMenuItem("About Paint");
         quitItem = new JMenuItem("Quit");
         paintMenu.add(aboutPaintItem);
+        paintMenu.addSeparator();
         paintMenu.add(quitItem);
 
         JMenu fileMenu = new JMenu("File");
@@ -62,6 +65,16 @@ public class PaintFrame extends JFrame {
         fileMenu.add(saveItem);
         fileMenu.add(saveAsItem);
         fileMenu.add(saveAsTemplate);
+
+        JMenu editMenu = new JMenu("Edit");
+        undoMenuItem = new JMenuItem("Undo");
+        undoMenuItem.setMnemonic('Z');
+        undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        redoMenuItem = new JMenuItem("Redo");
+        redoMenuItem.setMnemonic('X');
+        redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        editMenu.add(undoMenuItem);
+        editMenu.add(redoMenuItem);
 
         insertMenu = new JMenu("Insert");
         lineItem = new JMenuItem(ShapeRepository.LINE_NAME);
@@ -77,6 +90,7 @@ public class PaintFrame extends JFrame {
 
         menu.add(paintMenu);
         menu.add(fileMenu);
+        menu.add(editMenu);
         menu.add(insertMenu);
         menu.add(colors);
         setJMenuBar(menu);
@@ -102,12 +116,19 @@ public class PaintFrame extends JFrame {
         rectangleItem.addActionListener(insertListener);
 
         Graphics graphics = panel.getGraphics();
+        context.setGraphics(graphics);
+        CommandHistory commandHistory = CommandHistory.getCommandHistory();
         graphics.setClip(0, 0, panel.getWidth(), panel.getHeight());
-        MouseListener mouseListener = new MouseListener(graphics, context);
+        MouseListener mouseListener = new MouseListener(graphics, context, commandHistory);
         MouseMotionListener mouseMotionListener = new MouseMotionListener(graphics, context);
         panel.addMouseListener(mouseListener);
         panel.addMouseMotionListener(mouseMotionListener);
         newItem.addActionListener(new NewItemListener(graphics, context, this));
+
+        UndoMenuItemListener undoMenuItemListener = new UndoMenuItemListener(commandHistory);
+        RedoMenuItemListener redoMenuItemListener = new RedoMenuItemListener(commandHistory);
+        undoMenuItem.addActionListener(undoMenuItemListener);
+        redoMenuItem.addActionListener(redoMenuItemListener);
 
         colorChooser.addActionListener(new ChooseColorListener(panel, context));
     }
