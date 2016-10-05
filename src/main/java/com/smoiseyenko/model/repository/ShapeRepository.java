@@ -33,9 +33,7 @@ public class ShapeRepository implements Repository {
         return map;
     }
 
-    public Shape createShape(String shapeName) {
-        return map.get(shapeName).createShape();
-    }
+    public Shape createShape(String shapeName) { return map.get(shapeName).createShape(); }
 
     public void addTemplateFactory(String name, ShapeFactory factory) {
         map.put(name, factory);
