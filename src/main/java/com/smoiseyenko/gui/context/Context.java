@@ -1,10 +1,8 @@
 package com.smoiseyenko.gui.context;
 
 import com.smoiseyenko.gui.model.Shape;
-import com.smoiseyenko.gui.templates.Template;
 
 import java.awt.*;
-import java.util.List;
 
 /**
  * Created by Igor on 8/19/16.
@@ -16,11 +14,14 @@ public interface Context {
     Shape getCurrentShape();
     Shape createShape();
     void storeShape();
-    List<Shape> getShapes();
     void setCurrentColor(Color currentColor);
     void setTemplate(String name) throws CloneNotSupportedException;
     void setPanelSize(int width, int height);
     int getPanelWidth();
     int getPanelHeight();
     void removeShapes();
+    void setGraphics(Graphics graphics);
+    void repaintPanel();
+    void removeShape(Shape shape);
+    void addShape(Shape shape);
 }
