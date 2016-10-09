@@ -18,7 +18,7 @@ public class AboutItemListener implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        JOptionPane.showMessageDialog(frame, "<html>Paint provides you with a set of tools " +
+        JOptionPane.showMessageDialog(frame, "<html>Paint provides you with ShapesSerializer set of tools " +
                 "<br> with which you can draw any shape.");
     }
 }

@@ -2,6 +2,8 @@ package com.smoiseyenko.gui.context;
 
 import com.smoiseyenko.gui.model.Shape;
 
+import java.util.List;
+
 import java.awt.*;
 
 /**
@@ -24,4 +26,8 @@ public interface Context {
     void repaintPanel();
     void removeShape(Shape shape);
     void addShape(Shape shape);
+    void setShapes(List<Shape> shapes);
+    void setCurrentFileName(String fileName);
+    String getCurrentFileName();
+    List<Shape> getShapes();
 }

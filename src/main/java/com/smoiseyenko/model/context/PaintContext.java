@@ -15,14 +15,15 @@ import java.util.List;
 public class PaintContext implements Context {
 
     private static final PaintContext PAINT_CONTEXT = new PaintContext();
+    private String currentFileName;
     private Graphics graphics;
     private String currentShapeName = null;
     private Shape currentShape = null;
     private Color currentColor = Color.BLACK;
     private List<Shape> shapes = new ArrayList<Shape>();
     public static PaintContext getPaintContext() { return PAINT_CONTEXT; }
-    private int width;
-    private int height;
+    private int panelWidth;
+    private int panelHeight;
 
     private PaintContext(){}
 
@@ -50,15 +51,15 @@ public class PaintContext implements Context {
         ShapeRepository.getShapeRepository().addTemplateFactory(name, templateFactory);
     }
 
-    public void setPanelSize(int width, int height) {
+    public void setPanelSize(int panelWidth, int panelHeight) {
 
-        this.width = width;
-        this.height = height;
+        this.panelWidth = panelWidth;
+        this.panelHeight = panelHeight;
     }
 
-    public int getPanelHeight() { return height; }
+    public int getPanelHeight() { return panelHeight; }
 
-    public int getPanelWidth() { return width; }
+    public int getPanelWidth() { return panelWidth; }
 
     public void removeShapes() { shapes = new ArrayList<Shape>(); }
 
@@ -68,6 +69,7 @@ public class PaintContext implements Context {
 
         graphics.setColor(Color.WHITE);
         Rectangle rectangle = graphics.getClipBounds();
+
         graphics.fillRect(0, 0, (int) rectangle.getWidth(), (int) rectangle.getHeight());
 
         for (Shape shape : shapes) {
@@ -76,7 +78,18 @@ public class PaintContext implements Context {
         }
     }
 
+    public void setShapes(List<Shape> shapes) { this.shapes = shapes; }
+
+    public void setCurrentFileName(String currentFileName) { this.currentFileName = currentFileName; }
+
+    public String getCurrentFileName() { return currentFileName; }
+
     public void removeShape(Shape shape) { shapes.remove(shape); }
 
     public void addShape(Shape shape) { shapes.add(shape); }
+
+    public List<Shape> getShapes() { return shapes; }
 }
+
+
+

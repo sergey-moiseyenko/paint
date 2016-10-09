@@ -2,10 +2,9 @@ package com.smoiseyenko.gui;
 
 import com.smoiseyenko.gui.context.Context;
 import com.smoiseyenko.gui.command.CommandHistory;
+import com.smoiseyenko.gui.serialization.ShapesFileSerializer;
 import com.smoiseyenko.model.repository.ShapeRepository;
 import com.smoiseyenko.gui.listener.*;
-import com.smoiseyenko.gui.listener.MouseListener;
-import com.smoiseyenko.gui.listener.MouseMotionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -103,12 +102,13 @@ public class PaintFrame extends JFrame {
     private void setUpListeners(Context context) {
 
         InsertMenuItemListener insertListener = new InsertMenuItemListener(context);
+        ShapesFileSerializer serializableToFile = ShapesFileSerializer.getInstance();
 
         aboutPaintItem.addActionListener(new AboutItemListener(this));
         quitItem.addActionListener(new QuitItemListener(this));
-        openItem.addActionListener(new OpenItemListener());
-        saveItem.addActionListener(new SaveItemListener());
-        saveAsItem.addActionListener(new SaveAsItemListener());
+        openItem.addActionListener(new OpenItemListener(serializableToFile, context));
+        saveItem.addActionListener(new SaveItemListener(serializableToFile, context));
+        saveAsItem.addActionListener(new com.smoiseyenko.gui.listener.SaveAsItemListener(ShapesFileSerializer.getInstance(), context));
         saveAsTemplate.addActionListener(new SaveAsTemplateListener(context, insertMenu));
 
         lineItem.addActionListener(insertListener);
@@ -133,3 +133,5 @@ public class PaintFrame extends JFrame {
         colorChooser.addActionListener(new ChooseColorListener(panel, context));
     }
 }
+
+

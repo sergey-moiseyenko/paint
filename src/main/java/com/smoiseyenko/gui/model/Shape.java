@@ -1,11 +1,12 @@
 package com.smoiseyenko.gui.model;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Created by Igor on 7/24/16.
  */
-public abstract class Shape implements Cloneable {
+public abstract class Shape implements Cloneable, Serializable {
 
     private int xLeft;
     private int yTop;
