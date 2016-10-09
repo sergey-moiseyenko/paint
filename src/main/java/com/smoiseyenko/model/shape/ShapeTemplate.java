@@ -14,10 +14,7 @@ public class ShapeTemplate extends Template {
 
     private List<Shape> shapes;
 
-    public ShapeTemplate(List<Shape> shapes) {
-
-        this.shapes = shapes;
-    }
+    public ShapeTemplate(List<Shape> shapes) { this.shapes = shapes; }
 
     @Override
     public void draw(Graphics graphics) {

@@ -12,10 +12,7 @@ public class EllipseFactory implements ShapeFactory {
 
     private static final EllipseFactory INSTANCE = new EllipseFactory();
 
-    public static EllipseFactory getEllipseFactory() {
-
-        return INSTANCE;
-    }
+    public static EllipseFactory getEllipseFactory() { return INSTANCE; }
 
     public Shape createShape() {
         return new Ellipse();

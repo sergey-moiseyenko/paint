@@ -13,10 +13,7 @@ public class TemplateFactory implements ShapeFactory {
 
     private List<Shape> shapes;
 
-    public TemplateFactory(List<Shape> shapes) {
-
-       this.shapes = shapes;
-    }
+    public TemplateFactory(List<Shape> shapes) { this.shapes = shapes; }
 
     public Shape createShape() {
 

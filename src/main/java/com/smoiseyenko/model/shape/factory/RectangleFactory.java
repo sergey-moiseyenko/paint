@@ -11,10 +11,7 @@ public class RectangleFactory implements ShapeFactory {
 
     private static final RectangleFactory INSTANCE = new RectangleFactory();
 
-    public static RectangleFactory getRectangleFactory() {
-
-        return INSTANCE;
-    }
+    public static RectangleFactory getRectangleFactory() { return INSTANCE; }
 
     public Rectangle createShape() { return new Rectangle(); }
 }

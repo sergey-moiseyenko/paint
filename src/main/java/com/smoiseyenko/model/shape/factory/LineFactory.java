@@ -12,10 +12,7 @@ public class LineFactory implements ShapeFactory {
 
     private static final LineFactory INSTANCE = new LineFactory();
 
-    public static LineFactory getLineFactory() {
-
-        return INSTANCE;
-    }
+    public static LineFactory getLineFactory() { return INSTANCE; }
 
     public Shape createShape() { return new Line(); }
 }
