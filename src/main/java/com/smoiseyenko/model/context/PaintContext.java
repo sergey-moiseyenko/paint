@@ -5,8 +5,9 @@ import com.smoiseyenko.gui.model.Shape;
 import com.smoiseyenko.model.repository.ShapeRepository;
 import com.smoiseyenko.model.shape.factory.TemplateFactory;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by Igor on 8/18/16.
@@ -14,6 +15,7 @@ import java.util.*;
 public class PaintContext implements Context {
 
     private static final PaintContext PAINT_CONTEXT = new PaintContext();
+    private Graphics graphics;
     private String currentShapeName = null;
     private Shape currentShape = null;
     private Color currentColor = Color.BLACK;
@@ -38,8 +40,6 @@ public class PaintContext implements Context {
 
     public void storeShape() { shapes.add(currentShape); }
 
-    public List<Shape> getShapes() { return shapes; }
-
     public void setCurrentColor(Color currentColor) { this.currentColor = currentColor; }
 
     public String getCurrentShapeName() { return currentShapeName; }
@@ -61,4 +61,22 @@ public class PaintContext implements Context {
     public int getPanelWidth() { return width; }
 
     public void removeShapes() { shapes = new ArrayList<Shape>(); }
+
+    public void setGraphics(Graphics graphics) { this.graphics = graphics; }
+
+    public void repaintPanel() {
+
+        graphics.setColor(Color.WHITE);
+        Rectangle rectangle = graphics.getClipBounds();
+        graphics.fillRect(0, 0, (int) rectangle.getWidth(), (int) rectangle.getHeight());
+
+        for (Shape shape : shapes) {
+
+            shape.draw(graphics);
+        }
+    }
+
+    public void removeShape(Shape shape) { shapes.remove(shape); }
+
+    public void addShape(Shape shape) { shapes.add(shape); }
 }
